@@ -1,0 +1,93 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+
+{% block content %}
+     <div class="content-news">
+            <div class="content-news__title_news_one">{{ title }}</div>
+
+            <div class="content-news__image_slider">
+                {% if albom == 'null' %}
+                        <img src="{{ post.photo.url }}" alt="" class="picture_news">
+                {% else %}
+                    {% for img in albom %}
+                        <img src="{{ img.pictures.url }}" alt="" class="picture_news">
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+            <div class="content-news__text">
+
+                {{ post.content|linebreaksbr }}
+            </div>
+            <div class="content-news__all_detalies">
+                <div class="link">Посилання: <span> <a href="{{ post.link }}">{{ post.link }}</a> </span></div>
+                {% if post.file %}
+                    <div class="files">Файли: <span> <a href="{% url 'dowload_page' post.pk %}"><img src="{% static 'irc_news/img/icons/file.png' %}" width="5%"></a> </span></div>
+                {% else %}
+                {% endif %}
+
+
+                <div class="name_autora">Автор: <span><a href="{% url 'user_page' user_u.user_id %}">{{ user_u.first_name }} {{ user_u.last_name }}</a></span></div>
+                <div class="data">Дата публікації: <span>{{ post.time_create }}</span></div>
+                <div class="categoria">Категорія: <span>{{ post.categorie }}</span></div>
+            </div>
+
+            <div class="buton_admin">
+                {% if user.id == user_u.user_id  %}
+                    <button class="update"><a href="{% url 'update_news_page' post.pk %}">Редагувати</a></button>
+                    <button class="delete" onclick="deleteNews()">Видалити</button>
+                {% elif user.id == 1 %}
+                    <button class="update"><a href="{% url 'update_news_page' post.pk %}">Редагувати</a></button>
+<!--                    <button class="delete"><a href="{% url 'delete_news_page' post.pk %}">Видалити</a></button> -->
+                    <button class="delete" onclick="deleteNews()">Видалити</button>
+                {% endif %}
+            </div>
+
+            <div class="all_coment_user">
+                <div class="content-news__coments">
+                    <form class="coment" action="{{ update_news_page }}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form_coment.name }}
+                        {{ form_coment.content }}
+                        <button class="coment__button" type="submit">Додати</button>
+                    </form>
+                </div>
+                <div class="coment__user">
+                    {% if comentari_db %}
+                        {% for c in comentari_db %}
+                            <div class="user_write">
+                                {{ c.name }}: {{ c.content }}
+                                {% if user.is_authenticated %}
+<!--                                    <button class="delete_coment"><a href="{% url 'delete_coment' c.pk %}">Видалити</a></button>-->
+                                <button class="delete_coment" onclick="deleteComent()">Видалити</button>
+                                <script>
+                                    function deleteComent() {
+                                          if (confirm("Ви впевнені, що хочете видалити коментар?")) {
+                                            window.location.href = "{% url 'delete_coment' c.pk %}";
+                                          }
+                                        }
+                                </script>
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="user_write"> Немає коментарів</div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    <script>
+        function deleteNews() {
+          if (confirm("Ви впевнені, що хочете видалити новину?")) {
+            window.location.href = "{% url 'delete_news_page' post.pk %}";
+          }
+        }
+    </script>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="{% static 'irc_news/css/style.css'  %}">
+    {% block title %}
+
+    {% endblock title %}
+</head>
+<body>
+    <div class="heder">
+        <div class="item">
+            <div class="item__all">
+                <div class="item__text">Інклюзивно-Ресурсний Центр Дубровицької Міської Ради</div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapp">
+        {% block content %}
+
+
+        {% endblock content %}
+    </div>
+    <div class="foter">
+        <div class="button">
+            <div class="button__all">
+                <a href="{% url 'categorie_page' parametr=1 %}">
+                    <div class="button__btn1"></div>
+                </a>
+                <a href="{% url 'irc_page'  %}">
+                    <div class="button__btn2"></div>
+                </a>
+                <a href="{% url 'users_page'  %}">
+                    <div class="button__btn3"></div>
+                </a>
+                <a href="{% url 'categorie_page' parametr=2 %}">
+                    <div class="button__btn4"></div>
+                </a>
+                <a href="{% url 'categorie_page' parametr=3 %}">
+                    <div class="button__btn5"></div>
+                </a>
+                <a href="{% url 'categorie_page' parametr=4 %}">
+                    <div class="button__btn6"></div>
+                </a>
+                {% if user.is_authenticated and user.id != 1 %}
+                    <a href="{% url 'add_news_page' %}">
+                        <div class="button__btn7"></div>
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="{% static 'irc_news/js/js.js'  %}"></script>
+</html>

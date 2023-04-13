@@ -1,0 +1,27 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="add-news">
+            <form  class="content_add-news" method="post" enctype="multipart/form-data">
+
+
+                {% csrf_token %}
+
+                <p class="title_name">Вибери новину:</p>
+                {{ form.news }}
+                <p class="title_name">Вибери фото:</p>
+                {{ form.pictures }}
+
+
+                <button class="add_news" type="submit" >Додати фотографії</button>
+
+
+            </form>
+    </div>
+
+{% endblock content %}

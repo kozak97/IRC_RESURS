@@ -1,0 +1,26 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+
+{% block content %}
+
+    <div class="wrapp">
+            <div class="photos-page">
+                {% for a in albom %}
+                    <div class="photos-page__box">
+                        <img src="{{ a.pictures.url }}" alt="" class="photos-page__picture">
+                    </div>
+                    <button class="update_irc_photos" ><a href="{{ a.get_absolute_url }}">Видалити</a></button>
+                {% endfor %}
+            <button class="update_irc_photos" ><a href="{% url 'add_news_page_albom' id %}">Додати нові фотографії</a></button>
+
+            </div>
+
+
+    </div>
+
+{% endblock content %}

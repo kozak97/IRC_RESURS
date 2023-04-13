@@ -1,0 +1,31 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+
+ <div class="user-page">
+    <div class="user-page__box">
+        <img src="{{ irc.photo.url }}" alt="" class="user-page__picture">
+    </div>
+    <div class="user-page__boxForContent">
+        <div class="user_name"> {{ irc.title }}</div>
+        <div class="user_info">Загальна інформація: <span class="span_user-page">{{ irc.content|linebreaksbr }}</span>
+        </div>
+        <div class="user_info">Посилання: <span class="span_user-page"><a href="{{ irc.link }}">{{ irc.link }}</a></span>
+        </div>
+        <div class="user_info">Контакти: <span class="span_user-page">{{ irc.contact }}</span>
+        </div>
+        <div class="user_info">Email: <span class="span_user-page">{{ irc.email }}</span>
+        </div>
+        {% if user.is_authenticated %}
+            <button class="update_user_info"><a href="{% url 'add_pro_irc_page' irc.id %}">Редагувати</a></button>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

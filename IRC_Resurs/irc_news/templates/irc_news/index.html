@@ -1,0 +1,33 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+
+    {% for p in news %}
+    <div class="content">
+            <div class="title_news">{{ p.title }} </div>
+            <div class="content__item">
+                <div class="box_for_img">
+                    {% if p.photo %}
+                        <img src="{{ p.photo.url }}" alt="irc" class="picture"  >
+                    {% endif %}
+                </div>
+                <div class="content__box">
+                    <div class="content__text">
+                        {{ p.content }}
+                    </div>
+                    <button class="buton_all"><a href="{{ p.get_absolute_url }}">Читати все...</a></button>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+{% endblock content %}

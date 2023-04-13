@@ -1,0 +1,48 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="add-news">
+            <form  class="content_add-news" action="{{ update_news_page }}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+<!--                    {{ form.as_p }}-->
+
+                <p class="title_name">Назва статі:</p>
+                {{ form.title }}
+
+
+
+
+                <p class="title_name">Текст статі:</p>
+                {{ form.content }}
+
+                <p class="title_name">Картинка статі:</p>
+                {{ form.photo }}
+
+                <p class="title_name">Публікація статі:</p>
+                {{ form.is_published }}
+
+                <p class="title_name">Посилання:</p>
+                {{ form.link }}
+
+                <p class="title_name">Файл:</p>
+                {{ form.file }}
+
+                <p class="title_name">Категорія:</p>
+                {{ form.categorie }}
+
+                <p class="title_name">Автор:</p>
+                {{ form.author }}
+
+
+                <button class="add_news" type="submit" >{{ button }}</button>
+
+
+            </form>
+    </div>
+
+{% endblock content %}

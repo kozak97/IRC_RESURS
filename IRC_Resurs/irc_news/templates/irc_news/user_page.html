@@ -1,0 +1,54 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+
+{% block content %}
+
+        <div class="user-page">
+            <div class="user-page__box">
+                <img src="{{ user_one.photo.url }}" alt="" class="user-page__picture">
+            </div>
+            <div class="user-page__boxForContent">
+                <div class="user_name">Ім'я: <span class="span_user-page">{{ user_one.first_name }} {{ user_one.last_name }} {{ user_one.pobatkovi }} </span> </div>
+                <div class="user_age">Рік народження: <span class="span_user-page"> {{ user_one.birth_day }}</span></div>
+                <div class="user_info">Загальна інформація: <span class="span_user-page"> {{ user_one.posada }}</span></div>
+                <div class="user-posada">Посада: <span class="span_user-page">{{ user_one.info|linebreaksbr }}</span></div>
+                <div class="news_add">Додані статті:</br>
+                    {% for s in stati %}
+                    <span class="span_user-page"><a href="{% url 'one_page' s.slug %}"><li>{{ s.title }}</li></a></span>
+                    {% endfor %}
+                </div>
+                {% if user.id == user_one.user_id %}
+                    <button class="update_user_info"><a href="{% url 'user_page_update' user_one.id %}" >Редагувати</a></button>
+                {% elif user.id == 1 %}
+                    <button class="update_user_info"><a href="{% url 'user_page_update' user_one.id %}" >Редагувати</a></button>
+
+                {% endif %}
+
+
+                {% if user.username == 'admin_irc' %}
+<!--                    <button class="update_user_info"><a href="{% url 'user_delete' user_one.user_id %}" >Видалити</a></button>-->
+                    <button class="update_user_info" onclick="deleteUser()">Видалити</button>
+                    <script>
+                        function deleteUser() {
+                          if (confirm("Ви впевнені, що хочете видалити новину?")) {
+                            window.location.href = "{% url 'user_delete' user_one.user_id %}";
+                          }
+                        }
+                    </script>
+
+                {% endif %}
+
+
+            </div>
+        </div>
+        
+
+
+
+
+{% endblock content %}

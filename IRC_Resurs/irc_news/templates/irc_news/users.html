@@ -1,0 +1,58 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+
+{% block content %}
+
+    <div class="content-user">
+                {% for u in all_users %}
+                    <div class="all">
+                        <div class="box_user_picture">
+                            <img src="{{ u.photo.url }}" alt="" class="user_img">
+                        </div>
+                        <div class="name_user_all"><a href="{% url  'user_page' u.user_id %}"> {{ u.first_name }} {{ u.last_name }} </a> </div>
+                    </div>
+                {% endfor %}
+                {% if user.is_authenticated and user.id != 1 %}
+                    <div class="all">
+                        <div class="box_user_picture">
+                            <img src="{% static 'irc_news/img/icons/plus.png' %}" alt="" class="user_img" >
+                        </div>
+                        <div class="name_user_all"> <a href="{% url 'add_news_page' %}"> Додати новину </a></div>
+                    </div>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <div class="all">
+                        <div class="box_user_picture">
+                            <img src="{% static 'irc_news/img/icons/key.png' %}" alt="" class="user_img">
+                        </div>
+                        <div class="name_user_all"><a href="{% url 'logout' %}">Вийти</a></div>
+                    </div>
+                {% else %}
+                    <div class="all">
+                        <div class="box_user_picture">
+                            <img src="{% static 'irc_news/img/icons/key.png' %}" alt="" class="user_img">
+                        </div>
+                        <div class="name_user_all"><a href="{% url 'my_page' %}">Увійти</a></div>
+                    </div>
+                {% endif %}
+                {% if user.username == 'admin_irc' %}
+                    <div class="all">
+                        <div class="box_user_picture">
+                            <img src="{% static 'irc_news/img/icons/add-user.png' %}" alt="" class="user_img">
+                        </div>
+                        <div class="name_user_all"><a href="{% url 'registration' %}">Додати кристувача</a></div>
+                    </div>
+                {% endif %}
+
+
+
+
+    </div>
+
+{% endblock content %}

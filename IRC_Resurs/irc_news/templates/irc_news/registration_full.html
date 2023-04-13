@@ -1,0 +1,41 @@
+{% extends 'irc_news/base.html' %}
+{% load static %}
+
+{% block title %}
+        <title>{{ title }}</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="add-news">
+            <form  class="content_add-news"  method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="title_name">Призвіще:</p>
+                {{ form.first_name }}
+                <p class="title_name">Ім'я:</p>
+                {{ form.last_name }}
+                <p class="title_name">Побатькові:</p>
+                {{ form.pobatkovi }}
+                <p class="title_name">Дата народження:</p>
+                {{ form.birth_day }}
+                <p class="title_name">Посада:</p>
+                {{ form.posada }}
+                <p class="title_name">Загальна інформація:</p>
+                {{ form.info }}
+                <p class="title_name">Картинка статі:</p>
+                {{ form.photo }}
+                 <p class="title_name">Користувач:</p>
+                {{ form.user}}
+                <button class="add_news" type="submit" >{{ button }}</button>
+
+                {% if form.errors %}
+                    <div class="errors">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+
+            </form>
+
+    </div>
+
+{% endblock content %}
